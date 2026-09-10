@@ -29,6 +29,10 @@ jobs:
         working-directory: app
         run: go mod download
 
+      - name: Run Go tests
+        working-directory: app
+        run: go test ./...
+
       - name: Build Go API
         working-directory: app
         run: go build ./...
