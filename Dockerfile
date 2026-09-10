@@ -3,16 +3,18 @@ FROM golang:1.25 AS builder
 
 WORKDIR /build
 
-COPY app/go.mod ./
+COPY app/go.mod app/go.sum ./
 RUN go mod download
 
 COPY app/ ./
 RUN CGO_ENABLED=0 GOOS=linux go build -o containerlab-api ./cmd/api
 
 # ---------- Runtime stage ----------
-FROM alpine:3.20
+FROM alpine:3.22
 
-RUN apk add --no-cache wget
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache wget
 
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
