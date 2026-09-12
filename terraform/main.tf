@@ -76,3 +76,17 @@ resource "aws_subnet" "containerlab" {
     Name = "Default Subnet 1b"
   }
 }
+resource "aws_internet_gateway" "containerlab" {
+  vpc_id = "vpc-0374055579a7c71fd"
+
+  tags = {
+    Name = "Default Internet Gateway"
+  }
+}
+resource "aws_route_table" "containerlab" {
+  vpc_id = "vpc-0374055579a7c71fd"
+
+  tags = {
+    Name = "Default Rout Table"
+  }
+}
