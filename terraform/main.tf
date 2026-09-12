@@ -61,3 +61,18 @@ resource "aws_security_group" "containerlab" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_default_vpc" "containerlab" {
+  tags = {
+    Name = "Default VPC"
+  }
+}
+
+resource "aws_subnet" "containerlab" {
+  vpc_id                  = "vpc-0374055579a7c71fd"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "Default Subnet 1b"
+  }
+}
