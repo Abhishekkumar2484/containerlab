@@ -15,3 +15,8 @@ variable "ami_id" {
   type        = string
   default     = "ami-08188a5a4dfdbd573"
 }
+
+variable "admin_cidr" {
+  description = "Public IPv4 CIDR allowed to access administrative ports"
+  type        = string
+}
