@@ -72,3 +72,23 @@ jobs:
           tags: |
             ghcr.io/abhishekkumar2484/containerlab:latest
             ghcr.io/abhishekkumar2484/containerlab:${{ github.sha }}
+
+  deploy:
+    needs: build-and-push
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_DEPLOY_KEY }}
+          script: |
+            cd /home/ec2-user/containerlab
+            docker compose pull api
+            docker compose up -d
+            docker image prune -f
+            docker compose ps
+
